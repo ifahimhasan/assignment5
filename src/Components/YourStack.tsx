@@ -1,5 +1,5 @@
 import { IoClose } from 'react-icons/io5';
-import type { Technology } from '../types/technology';
+import type { Technology } from '../Types/technology';
 
 interface YourStackProps {
   selectedTechs: Technology[];

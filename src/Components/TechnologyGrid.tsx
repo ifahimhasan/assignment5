@@ -1,5 +1,5 @@
-import type { Technology } from '../types/technology';
-import TechnologyCard from './TechnologyCard';
+import type { Technology } from '../Types/technology';
+import TechnologyCard from '../Components/TechnologyCard';
 
 interface TechnologyGridProps {
   technologies: Technology[];

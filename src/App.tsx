@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Header from './components/Header';
-import Banner from './components/Banner';
-import TechnologyGrid from './components/TechnologyGrid';
-import YourStack from './components/YourStack';
-import Footer from './components/Footer';
+import Header from './Components/Header';
+import Banner from './Components/Banner';
+import TechnologyGrid from './Components/TechnologyGrid';
+import YourStack from './Components/YourStack';
+import Footer from './Components/Footer';
 import { ToastContainer, toast } from 'react-toastify';
-import type { Technology } from './types/technology';
+import type { Technology } from './Types/technology';
 import './index.css';
 
 function App() {

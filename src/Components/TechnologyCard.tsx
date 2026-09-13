@@ -1,5 +1,5 @@
 import { AiFillStar } from 'react-icons/ai';
-import type { Technology } from '../types/technology';
+import type { Technology } from '../Types/technology';
 
 interface TechnologyCardProps {
   tech: Technology;
