@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import 'react-toastify/dist/ReactToastify.css';
 
 @import "tailwindcss";
 
@@ -15,4 +16,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.bg-gradient-brand {
+  background: var(--gradient-primary);
 }

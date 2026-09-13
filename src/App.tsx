@@ -1,69 +1,88 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Banner from './components/Banner';
 import TechnologyGrid from './components/TechnologyGrid';
 import YourStack from './components/YourStack';
 import Footer from './components/Footer';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 import type { Technology } from './types/technology';
 import './index.css';
 
-// Fetch technologies from JSON
-const fetchTechnologies = async (): Promise<Technology[]> => {
-  const response = await fetch('/technologies.json');
-  if (!response.ok) throw new Error('Failed to load technologies');
-  return response.json();
-};
-
 function App() {
+  const [technologies, setTechnologies] = useState<Technology[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedTechs, setSelectedTechs] = useState<Technology[]>([]);
 
-  const technologiesPromise = fetchTechnologies();
+  
+  useEffect(() => {
+    fetch('/technologies.json')
+      .then((res) => res.json())
+      .then((data) => {
+        setTechnologies(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
 
   const handleAddTech = (tech: Technology) => {
     const isAlreadyAdded = selectedTechs.some((t) => t.id === tech.id);
-    if (!isAlreadyAdded) {
-      setSelectedTechs([...selectedTechs, tech]);
+
+    if (isAlreadyAdded) {
+      toast.warning(`${tech.name} is already in your stack!`);
+      return;
     }
+
+    setSelectedTechs([...selectedTechs, tech]);
+    toast.success(`${tech.name} added to your stack!`);
   };
 
   const handleRemoveTech = (id: string) => {
-    setSelectedTechs(selectedTechs.filter((tech) => tech.id !== id));
+    const tech = selectedTechs.find((t) => t.id === id);
+    setSelectedTechs(selectedTechs.filter((t) => t.id !== id));
+    if (tech) {
+      toast.info(`${tech.name} removed from stack`);
+    }
   };
 
   const handleClearAll = () => {
+    if (selectedTechs.length === 0) {
+      toast.info('Your stack is already empty!');
+      return;
+    }
     setSelectedTechs([]);
+    toast.warning('All technologies removed from stack');
   };
 
   return (
     <>
-      <Header selectedCount={selectedTechs.length} />
+      <Header />
       <Banner />
 
-      {/* Main Content */}
-      <section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20'>
-        <div className='mb-12'>
-          <h2 className='text-4xl md:text-5xl font-bold mb-3'>
+      
+      <section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16'>
+        <div className='mb-10'>
+          <h2 className='text-3xl md:text-4xl font-bold mb-2'>
             Explore the <span className='text-gradient'>Technologies</span>
           </h2>
-          <p className='text-gray-600 text-lg'>
-            Pick one technology per category to build your ideal stack.
+          <p className='text-gray-600'>
+            Add the technologies you like and build your ideal stack.
           </p>
         </div>
 
-        {/* Grid + Sidebar Layout */}
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-          {/* Technology Grid */}
-          <div className='lg:col-span-2'>
+        
+        <div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
+          <div className='lg:col-span-3'>
             <TechnologyGrid
-              technologiesPromise={technologiesPromise}
+              technologies={technologies}
+              loading={loading}
               selectedTechs={selectedTechs}
               onAddTech={handleAddTech}
             />
           </div>
 
-          {/* Your Stack Sidebar */}
           <div className='lg:col-span-1'>
             <YourStack
               selectedTechs={selectedTechs}
@@ -76,7 +95,6 @@ function App() {
 
       <Footer />
 
-      {/* Toast Notifications */}
       <ToastContainer
         position='bottom-right'
         autoClose={3000}
