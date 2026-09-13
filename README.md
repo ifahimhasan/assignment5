@@ -6,7 +6,7 @@ You can look through 15 technologies (React, Node.js, PostgreSQL, Docker and mor
 
 ## Live Site
 
-[Add your live link here]
+https://relaxed-heliotrope-daef83.netlify.app/
 
 ## Technology I Used
 
