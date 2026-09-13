@@ -39,7 +39,7 @@ const Header = () => {
           <button className='text-sm sm:text-base text-gray-900 font-semibold hover:text-purple-600 transition-all duration-300'>
             Sign In
           </button>
-          <button className='px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg bg-gradient-brand text-white text-sm sm:text-base font-semibold hover:shadow-lg transition-all duration-300'>
+          <button className='px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-gradient-brand text-white text-sm sm:text-base font-semibold hover:shadow-lg transition-all duration-300'>
             Sign Up
           </button>
         </div>
